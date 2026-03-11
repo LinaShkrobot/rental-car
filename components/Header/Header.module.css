@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 68px;
+  padding: 24px 120px;
+  background-color: var(--badges);
+  border-bottom: 1px solid var(--badges);
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+}
+
+.navLink {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--main);
+  line-height: 125%;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navLink:hover {
+  color: var(--button);
+}
+
+.active {
+  color: var(--button);
+}
