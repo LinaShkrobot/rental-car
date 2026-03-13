@@ -1,20 +1,22 @@
 .wrapper {
   padding: 32px;
   border: 1px solid var(--gray-light);
-  border-radius: 14px;
+  border-radius: 10px;
+  background: var(--white);
 }
 
 .title {
   font-weight: 600;
-  font-size: 18px;
-  line-height: 133%;
+  font-size: 20px;
+  line-height: 120%;
   color: var(--main);
   margin-bottom: 8px;
 }
 
 .subtitle {
-  font-size: 14px;
-  line-height: 143%;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
   color: var(--gray);
   margin-bottom: 24px;
 }
@@ -27,13 +29,14 @@
 
 .input {
   width: 100%;
-  padding: 14px 18px;
-  font-family: var(--font-family);
+  padding: 14px 20px;
+  font-weight: 500;
+  line-height: 125%;
   font-size: 16px;
   color: var(--main);
   background: var(--inputs);
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   outline: none;
 }
 
@@ -42,23 +45,25 @@
 }
 
 .textarea {
-  min-height: 80px;
+  border-radius: 12px;
+  padding: 12px 20px 56px;
+  min-height: 88px;
   resize: vertical;
 }
 
 .sendBtn {
-  align-self: flex-start;
-  padding: 14px 44px;
+  align-self: center;
+  padding: 12px 51px;
   background-color: var(--button);
   color: var(--white);
-  font-family: var(--font-family);
   font-weight: 600;
-  font-size: 14px;
-  line-height: 129%;
+  font-size: 16px;
+  line-height: 125%;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: 8px;
 }
 
 .sendBtn:hover {

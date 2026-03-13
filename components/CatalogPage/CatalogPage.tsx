@@ -28,6 +28,21 @@ export default function CatalogPage() {
     fetchCars();
   }
 
+  function formatMileage(prefix: string, value: string): string {
+    const digits = value.replace(/\D/g, "");
+    return digits
+      ? `${prefix} ${Number(digits).toLocaleString("en-US")}`
+      : prefix;
+  }
+
+  function handleMileageChange(
+    name: "minMileage" | "maxMileage",
+    value: string,
+  ) {
+    const digits = value.replace(/\D/g, "");
+    setFilter(name, digits);
+  }
+
   return (
     <section className={styles.container}>
       <div className={styles.filters}>
@@ -45,16 +60,18 @@ export default function CatalogPage() {
             <input
               className={styles.mileageInput}
               type="text"
-              placeholder="From"
-              value={filters.minMileage}
-              onChange={(e) => setFilter("minMileage", e.target.value)}
+              value={formatMileage("From", filters.minMileage)}
+              onChange={(e) =>
+                handleMileageChange("minMileage", e.target.value)
+              }
             />
             <input
               className={styles.mileageInput}
               type="text"
-              placeholder="To"
-              value={filters.maxMileage}
-              onChange={(e) => setFilter("maxMileage", e.target.value)}
+              value={formatMileage("To", filters.maxMileage)}
+              onChange={(e) =>
+                handleMileageChange("maxMileage", e.target.value)
+              }
             />
           </div>
         </div>
@@ -79,15 +96,18 @@ export default function CatalogPage() {
             ))}
           </ul>
 
-          {page <= totalPages && (
-            <button
-              className={styles.loadMore}
-              onClick={loadMore}
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Load more"}
-            </button>
-          )}
+          {page <= totalPages &&
+            (loading ? (
+              <Loader />
+            ) : (
+              <button
+                className={styles.loadMore}
+                onClick={loadMore}
+                type="button"
+              >
+                Load more
+              </button>
+            ))}
         </>
       )}
     </section>

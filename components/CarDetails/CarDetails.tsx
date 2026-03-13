@@ -60,7 +60,7 @@ export default function CarDetails({ id }: { id: string }) {
             <use href="/icons/sprite.svg#icon-location" />
           </svg>
           {city}, {country}
-          &nbsp;&nbsp;&nbsp;Mileage: {formatMileage(car.mileage)} km
+          <span className={css.mileage}>Mileage: {formatMileage(car.mileage)} km</span>
         </p>
         <p className={css.price}>${car.rentalPrice}</p>
         <p className={css.description}>{car.description}</p>

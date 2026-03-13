@@ -60,7 +60,7 @@
 }
 
 .menu::-webkit-scrollbar {
-  width: 8px;
+  width: 14px;
 }
 
 .menu::-webkit-scrollbar-track {
@@ -71,7 +71,9 @@
 
 .menu::-webkit-scrollbar-thumb {
   background-color: var(--gray-light);
-  border-radius: 10px;
+  border-radius: 100px;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }
 
 .option {
