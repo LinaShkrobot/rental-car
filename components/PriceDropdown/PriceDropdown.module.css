@@ -1,0 +1,95 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.dropdown {
+  position: relative;
+  width: 204px;
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: var(--inputs);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 125%;
+  color: var(--main);
+  cursor: pointer;
+}
+
+.arrow {
+  width: 13px;
+  height: 7px;
+  transition: transform 0.2s;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 130px;
+  overflow-y: auto;
+  background-color: var(--white);
+  border: 1px solid var(--inputs);
+  border-radius: 12px;
+  padding: 14px 8px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+  box-shadow: 0 4px 36px rgba(0, 0, 0, 0.02);
+}
+
+.menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.menu::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background-color: var(--gray-light);
+  border-radius: 10px;
+}
+
+.option {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.option:hover {
+  color: var(--main);
+}
+
+.optionActive {
+  color: var(--main);
+  font-weight: 700;
+}

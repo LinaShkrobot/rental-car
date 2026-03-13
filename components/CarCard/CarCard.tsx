@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Car } from "@/types/car";
+import { useCarsStore } from "@/store/carsStore";
 import css from "./CarCard.module.css";
 
 interface CarCardProps {
@@ -12,6 +15,9 @@ function formatMileage(mileage: number): string {
 }
 
 export default function CarCard({ car }: CarCardProps) {
+  const { favorites, toggleFavorite } = useCarsStore();
+  const isFavorite = favorites.includes(car.id);
+
   const city = car.address.split(", ")[1];
   const country = car.address.split(", ")[2];
 
@@ -24,6 +30,22 @@ export default function CarCard({ car }: CarCardProps) {
           fill
           className={css.image}
         />
+        <button
+          className={css.favoriteBtn}
+          onClick={() => toggleFavorite(car.id)}
+          type="button"
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          <svg
+            width="16"
+            height="15"
+            className={isFavorite ? css.favoriteActive : css.favoriteIcon}
+          >
+            <use
+              href={`/icons/sprite.svg#${isFavorite ? "icon-heart-filled" : "icon-heart"}`}
+            />
+          </svg>
+        </button>
       </div>
 
       <div className={css.titleRow}>

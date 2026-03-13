@@ -86,3 +86,11 @@
 .readMore:hover {
   background-color: var(--button-hover);
 }
+
+.favoriteIcon {
+  color: var(--white);
+}
+
+.favoriteActive {
+  color: var(--button);
+}

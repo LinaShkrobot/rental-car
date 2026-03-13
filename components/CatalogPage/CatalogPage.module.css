@@ -4,6 +4,14 @@
   padding: 56px 120px 124px;
 }
 
+.filters {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 50px;
+}
+
 .list {
   display: flex;
   flex-wrap: wrap;
@@ -31,4 +39,64 @@
 .loadMore:hover {
   color: var(--button-hover);
   border-color: var(--button-hover);
+}
+
+.mileageGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mileageLabel {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 133%;
+  color: var(--gray);
+}
+
+.mileageInputs {
+  display: flex;
+}
+
+.mileageInput {
+  width: 160px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 125%;
+  background: var(--inputs);
+  border: 1px solid var(--gray-light);
+  outline: none;
+}
+
+.mileageInput::placeholder {
+  color: var(--main);
+}
+
+.mileageInput:first-child {
+  border-radius: 12px 0 0 12px;
+  border: none;
+  border-right: 1px solid var(--gray-light);
+}
+
+.mileageInput:last-child {
+  border-radius: 0 12px 12px 0;
+  border: none;
+}
+
+.searchBtn {
+  padding: 12px 51px;
+  background-color: var(--button);
+  color: var(--white);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.searchBtn:hover {
+  background-color: var(--button-hover);
 }
