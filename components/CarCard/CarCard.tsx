@@ -3,23 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Car } from "@/types/car";
+import { formatMileage, parseAddress } from "@/lib/utils";
 import { useCarsStore } from "@/store/carsStore";
 import css from "./CarCard.module.css";
+import clsx from "clsx";
 
 interface CarCardProps {
   car: Car;
-}
-
-function formatMileage(mileage: number): string {
-  return mileage.toLocaleString("uk-UA");
 }
 
 export default function CarCard({ car }: CarCardProps) {
   const { favorites, toggleFavorite } = useCarsStore();
   const isFavorite = favorites.includes(car.id);
 
-  const city = car.address.split(", ")[1];
-  const country = car.address.split(", ")[2];
+  const { city, country } = parseAddress(car.address);
 
   return (
     <div className={css.card}>
@@ -56,7 +53,7 @@ export default function CarCard({ car }: CarCardProps) {
         <span className={css.price}>${car.rentalPrice}</span>
       </div>
 
-      <p className={`${css.info} ${css.infoLast}`}>
+      <p className={clsx(css.info, css.infoLast)}>
         {city} | {country} | {car.rentalCompany}
       </p>
       <p className={css.info}>

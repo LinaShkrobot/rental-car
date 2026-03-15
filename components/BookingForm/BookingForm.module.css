@@ -51,21 +51,19 @@
   resize: vertical;
 }
 
-.sendBtn {
-  align-self: center;
-  padding: 12px 51px;
-  background-color: var(--button);
-  color: var(--white);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 125%;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 8px;
+.dateInput {
+  color: var(--gray);
 }
 
-.sendBtn:hover {
-  background-color: var(--button-hover);
+.dateInput::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+}
+
+.dateFilled {
+  color: var(--main);
+}
+
+.bookBtn {
+  width: 156px;
+  align-self: center;
 }

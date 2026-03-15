@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./PriceDropdown.module.css";
+import clsx from "clsx";
 
 type Props = {
   value: string;
@@ -29,7 +30,7 @@ export default function PriceDropdown({ value, onChange }: Props) {
         >
           {value ? `To $${value}` : "Choose a price"}
           <svg
-            className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ""}`}
+            className={clsx(styles.arrow, isOpen && styles.arrowOpen)}
             width="13"
             height="7"
           >
@@ -42,9 +43,10 @@ export default function PriceDropdown({ value, onChange }: Props) {
             {prices.map((price) => (
               <li key={price}>
                 <button
-                  className={`${styles.option} ${
-                    value === price ? styles.optionActive : ""
-                  }`}
+                  className={clsx(
+                    styles.option,
+                    value === price && styles.optionActive,
+                  )}
                   onClick={() => handleSelect(price)}
                   type="button"
                 >

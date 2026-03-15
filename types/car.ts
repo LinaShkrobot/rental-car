@@ -23,3 +23,10 @@ export interface CarsResponse {
   page: number;
   totalPages: number;
 }
+
+export interface Filters {
+  brand: string;
+  rentalPrice: string;
+  minMileage: string;
+  maxMileage: string;
+}

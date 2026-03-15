@@ -6,7 +6,7 @@
   height: 68px;
   padding: 24px 120px;
   background-color: var(--badges);
-  border-bottom: 1px solid var(--badges);
+  margin-bottom: 4px;
 }
 
 .nav {

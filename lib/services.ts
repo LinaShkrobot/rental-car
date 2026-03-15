@@ -1,15 +1,9 @@
 import api from "./api";
-import { Car, CarsResponse } from "@/types/car";
-interface Filters {
-  brand?: string;
-  rentalPrice?: string;
-  minMileage?: string;
-  maxMileage?: string;
-}
+import { Car, CarsResponse, Filters } from "@/types/car";
 
 export async function getCars(
   page: number = 1,
-  filters: Filters = {},
+  filters: Partial<Filters> = {},
 ): Promise<CarsResponse> {
   const params: Record<string, string | number> = { page };
 

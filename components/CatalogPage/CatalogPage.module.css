@@ -1,44 +1,22 @@
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 56px 120px 124px;
+  padding: 84px 120px 124px;
 }
 
 .filters {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 18px;
-  margin-bottom: 50px;
+  gap: 16px;
+  margin-bottom: 56px;
 }
 
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px 29px;
-  margin-bottom: 50px;
-}
-
-.loadMore {
-  display: block;
-  margin: 0 auto;
-  padding: 12px 44px;
-  background-color: transparent;
-  color: var(--button);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 150%;
-  border: 1px solid var(--button);
-  border-radius: 12px;
-  cursor: pointer;
-  transition:
-    color 0.3s,
-    border-color 0.3s;
-}
-
-.loadMore:hover {
-  color: var(--button-hover);
-  border-color: var(--button-hover);
+  gap: 48px 32px;
+  margin-bottom: 80px;
 }
 
 .mileageGroup {
@@ -84,19 +62,14 @@
   border: none;
 }
 
-.searchBtn {
-  padding: 12px 51px;
-  background-color: var(--button);
-  color: var(--white);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 125%;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.empty {
+  text-align: center;
+  font-size: 18px;
+  color: var(--gray);
+  padding: 80px 0;
 }
 
-.searchBtn:hover {
-  background-color: var(--button-hover);
+.loadMoreBtn {
+  display: block;
+  margin: 0 auto;
 }

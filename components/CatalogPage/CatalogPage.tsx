@@ -7,6 +7,8 @@ import BrandDropdown from "@/components/BrandDropdown/BrandDropdown";
 import PriceDropdown from "@/components/PriceDropdown/PriceDropdown";
 import Loader from "@/components/Loader/Loader";
 import styles from "./CatalogPage.module.css";
+import { formatMileageInput } from "@/lib/utils";
+import Button from "@/components/Button/Button";
 
 export default function CatalogPage() {
   const {
@@ -26,13 +28,6 @@ export default function CatalogPage() {
 
   function handleSearch() {
     fetchCars();
-  }
-
-  function formatMileage(prefix: string, value: string): string {
-    const digits = value.replace(/\D/g, "");
-    return digits
-      ? `${prefix} ${Number(digits).toLocaleString("en-US")}`
-      : prefix;
   }
 
   function handleMileageChange(
@@ -60,7 +55,7 @@ export default function CatalogPage() {
             <input
               className={styles.mileageInput}
               type="text"
-              value={formatMileage("From", filters.minMileage)}
+              value={formatMileageInput("From", filters.minMileage)}
               onChange={(e) =>
                 handleMileageChange("minMileage", e.target.value)
               }
@@ -68,45 +63,48 @@ export default function CatalogPage() {
             <input
               className={styles.mileageInput}
               type="text"
-              value={formatMileage("To", filters.maxMileage)}
+              value={formatMileageInput("To", filters.maxMileage)}
               onChange={(e) =>
                 handleMileageChange("maxMileage", e.target.value)
               }
             />
           </div>
         </div>
-        <button
-          className={styles.searchBtn}
-          onClick={handleSearch}
-          type="button"
-        >
+        <Button onClick={handleSearch} type="button">
           Search
-        </button>
+        </Button>
       </div>
 
       {loading && cars.length === 0 ? (
         <Loader />
       ) : (
         <>
-          <ul className={styles.list}>
-            {cars.map((car) => (
-              <li key={car.id}>
-                <CarCard car={car} />
-              </li>
-            ))}
-          </ul>
+          {cars.length > 0 ? (
+            <ul className={styles.list}>
+              {cars.map((car) => (
+                <li key={car.id}>
+                  <CarCard car={car} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className={styles.empty}>
+              No cars found matching your criteria.
+            </p>
+          )}
 
           {page <= totalPages &&
             (loading ? (
               <Loader />
             ) : (
-              <button
-                className={styles.loadMore}
+              <Button
+                variant="outline"
                 onClick={loadMore}
                 type="button"
+                className={styles.loadMoreBtn}
               >
                 Load more
-              </button>
+              </Button>
             ))}
         </>
       )}

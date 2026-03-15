@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getBrands } from "@/lib/services";
+import { useCarsStore } from "@/store/carsStore";
 import styles from "./BrandDropdown.module.css";
+import clsx from "clsx";
 
 type Props = {
   value: string;
@@ -10,20 +11,12 @@ type Props = {
 };
 
 export default function BrandDropdown({ value, onChange }: Props) {
-  const [brands, setBrands] = useState<string[]>([]);
+  const { brands, fetchBrands } = useCarsStore();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    async function fetchBrands() {
-      try {
-        const data = await getBrands();
-        setBrands(data);
-      } catch (error) {
-        console.error("Failed to load brands:", error);
-      }
-    }
     fetchBrands();
-  }, []);
+  }, [fetchBrands]);
 
   function handleSelect(brand: string) {
     onChange(brand);
@@ -41,7 +34,7 @@ export default function BrandDropdown({ value, onChange }: Props) {
         >
           {value || "Choose a brand"}
           <svg
-            className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ""}`}
+            className={clsx(styles.arrow, isOpen && styles.arrowOpen)}
             width="13"
             height="7"
           >
@@ -54,9 +47,10 @@ export default function BrandDropdown({ value, onChange }: Props) {
             {brands.map((brand) => (
               <li key={brand}>
                 <button
-                  className={`${styles.option} ${
-                    value === brand ? styles.optionActive : ""
-                  }`}
+                  className={clsx(
+                    styles.option,
+                    value === brand && styles.optionActive,
+                  )}
                   onClick={() => handleSelect(brand)}
                   type="button"
                 >

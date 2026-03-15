@@ -1,14 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Car } from "@/types/car";
-import { getCars } from "@/lib/services";
-
-interface Filters {
-  brand: string;
-  rentalPrice: string;
-  minMileage: string;
-  maxMileage: string;
-}
+import { Car, Filters } from "@/types/car";
+import { getCars, getCarById, getBrands } from "@/lib/services";
+import toast from "react-hot-toast";
 
 interface CarsState {
   cars: Car[];
@@ -17,11 +11,16 @@ interface CarsState {
   loading: boolean;
   filters: Filters;
   favorites: string[];
+  currentCar: Car | null;
+  currentCarLoading: boolean;
+  brands: string[];
 
   setFilter: (key: keyof Filters, value: string) => void;
   fetchCars: () => Promise<void>;
   loadMore: () => Promise<void>;
   toggleFavorite: (id: string) => void;
+  fetchCarById: (id: string) => Promise<void>;
+  fetchBrands: () => Promise<void>;
 }
 
 export const useCarsStore = create<CarsState>()(
@@ -31,6 +30,8 @@ export const useCarsStore = create<CarsState>()(
       page: 1,
       totalPages: 1,
       loading: false,
+      currentCar: null,
+      currentCarLoading: false,
       filters: {
         brand: "",
         rentalPrice: "",
@@ -38,11 +39,36 @@ export const useCarsStore = create<CarsState>()(
         maxMileage: "",
       },
       favorites: [],
+      brands: [],
+
+      fetchBrands: async () => {
+        if (get().brands.length > 0) return;
+        try {
+          const data = await getBrands();
+          set({ brands: data });
+        } catch (error) {
+          console.error("Failed to load brands:", error);
+          toast.error("Failed to load brands.");
+        }
+      },
 
       setFilter: (key, value) =>
         set((state) => ({
           filters: { ...state.filters, [key]: value },
         })),
+
+      fetchCarById: async (id) => {
+        set({ currentCarLoading: true, currentCar: null });
+        try {
+          const data = await getCarById(id);
+          set({ currentCar: data });
+        } catch (error) {
+          console.error("Failed to fetch car:", error);
+          toast.error("Failed to load car details. Please try again.");
+        } finally {
+          set({ currentCarLoading: false });
+        }
+      },
 
       fetchCars: async () => {
         set({ loading: true, cars: [], page: 1 });
@@ -56,6 +82,7 @@ export const useCarsStore = create<CarsState>()(
           });
         } catch (error) {
           console.error("Failed to fetch cars:", error);
+          toast.error("Failed to load cars. Please try again.");
         } finally {
           set({ loading: false });
         }
@@ -73,6 +100,7 @@ export const useCarsStore = create<CarsState>()(
           }));
         } catch (error) {
           console.error("Failed to load more cars:", error);
+          toast.error("Failed to load more cars. Please try again.");
         } finally {
           set({ loading: false });
         }

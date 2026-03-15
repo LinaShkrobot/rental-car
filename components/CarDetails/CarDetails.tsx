@@ -1,40 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
-import { Car } from "@/types/car";
-import { getCarById } from "@/lib/services";
+import { useCarsStore } from "@/store/carsStore";
+import { parseAddress } from "@/lib/utils";
 import BookingForm from "@/components/BookingForm/BookingForm";
 import Loader from "@/components/Loader/Loader";
+import Icon from "@/components/Icon/Icon";
 import css from "./CarDetails.module.css";
 
-function formatMileage(mileage: number): string {
-  return mileage.toLocaleString("uk-UA");
-}
-
 export default function CarDetails({ id }: { id: string }) {
-  const [car, setCar] = useState<Car | null>(null);
-  const [loading, setLoading] = useState(true);
+  const {
+    currentCar: car,
+    currentCarLoading: loading,
+    fetchCarById,
+  } = useCarsStore();
 
   useEffect(() => {
-    async function fetchCar() {
-      try {
-        const data = await getCarById(id);
-        setCar(data);
-      } catch (error) {
-        console.error("Failed to load car:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCar();
-  }, [id]);
+    fetchCarById(id);
+  }, [id, fetchCarById]);
 
   if (loading) return <Loader />;
   if (!car) return <p className={css.error}>Car not found</p>;
 
-  const city = car.address.split(", ")[1];
-  const country = car.address.split(", ")[2];
+  const { city, country } = parseAddress(car.address);
 
   return (
     <section className={css.container}>
@@ -47,7 +36,7 @@ export default function CarDetails({ id }: { id: string }) {
             className={css.image}
           />
         </div>
-        <BookingForm carId={car.id} />
+        <BookingForm />
       </div>
 
       <div className={css.right}>
@@ -56,11 +45,11 @@ export default function CarDetails({ id }: { id: string }) {
           <span className={css.id}> Id: {car.id.slice(0, 4)}</span>
         </h2>
         <p className={css.location}>
-          <svg width="16" height="16" className={css.icon}>
-            <use href="/icons/sprite.svg#icon-location" />
-          </svg>
+          <Icon name="location" className={css.icon} />
           {city}, {country}
-          <span className={css.mileage}>Mileage: {formatMileage(car.mileage)} km</span>
+          <span className={css.mileage}>
+            Mileage: {car.mileage.toLocaleString("uk-UA")} km
+          </span>
         </p>
         <p className={css.price}>${car.rentalPrice}</p>
         <p className={css.description}>{car.description}</p>
@@ -69,9 +58,7 @@ export default function CarDetails({ id }: { id: string }) {
         <ul className={css.conditionsList}>
           {car.rentalConditions.map((condition, i) => (
             <li key={i} className={css.conditionItem}>
-              <svg width="16" height="16" className={css.checkIcon}>
-                <use href="/icons/sprite.svg#icon-check-circle" />
-              </svg>
+              <Icon name="check-circle" className={css.checkIcon} />
               {condition}
             </li>
           ))}
@@ -80,27 +67,19 @@ export default function CarDetails({ id }: { id: string }) {
         <h3 className={css.subtitle}>Car Specifications:</h3>
         <ul className={css.conditionsList}>
           <li className={css.conditionItem}>
-            <svg width="16" height="16" className={css.checkIcon}>
-              <use href="/icons/sprite.svg#icon-calendar" />
-            </svg>
+            <Icon name="calendar" className={css.checkIcon} />
             Year: {car.year}
           </li>
           <li className={css.conditionItem}>
-            <svg width="16" height="16" className={css.checkIcon}>
-              <use href="/icons/sprite.svg#icon-car" />
-            </svg>
+            <Icon name="car" className={css.checkIcon} />
             Type: {car.type}
           </li>
           <li className={css.conditionItem}>
-            <svg width="16" height="16" className={css.checkIcon}>
-              <use href="/icons/sprite.svg#icon-fuel" />
-            </svg>
+            <Icon name="fuel" className={css.checkIcon} />
             Fuel Consumption: {car.fuelConsumption}
           </li>
           <li className={css.conditionItem}>
-            <svg width="16" height="16" className={css.checkIcon}>
-              <use href="/icons/sprite.svg#icon-engine" />
-            </svg>
+            <Icon name="engine" className={css.checkIcon} />
             Engine Size: {car.engineSize}
           </li>
         </ul>
@@ -109,9 +88,7 @@ export default function CarDetails({ id }: { id: string }) {
         <ul className={css.conditionsList}>
           {[...car.accessories, ...car.functionalities].map((item, i) => (
             <li key={i} className={css.conditionItem}>
-              <svg width="16" height="16" className={css.checkIcon}>
-                <use href="/icons/sprite.svg#icon-check-circle" />
-              </svg>
+              <Icon name="check-circle" className={css.checkIcon} />
               {item}
             </li>
           ))}

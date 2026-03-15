@@ -3,8 +3,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import css from "./BookingForm.module.css";
+import Button from "@/components/Button/Button";
+import clsx from "clsx";
 
-export default function BookingForm({ carId }: { carId: string }) {
+export default function BookingForm() {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -18,7 +20,7 @@ export default function BookingForm({ carId }: { carId: string }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!form.name.trim() || !form.email.trim()) {
@@ -26,12 +28,8 @@ export default function BookingForm({ carId }: { carId: string }) {
       return;
     }
 
-    try {
-      toast.success("Car successfully booked!");
-      setForm({ name: "", email: "", bookingDate: "", comment: "" });
-    } catch {
-      toast.error("Booking failed. Please try again.");
-    }
+    toast.success("Car successfully booked!");
+    setForm({ name: "", email: "", bookingDate: "", comment: "" });
   }
 
   return (
@@ -58,23 +56,23 @@ export default function BookingForm({ carId }: { carId: string }) {
           onChange={handleChange}
         />
         <input
-          className={css.input}
-          type="text"
+          className={clsx(css.input, css.dateInput, form.bookingDate && css.dateFilled)}
+          type="date"
           name="bookingDate"
           placeholder="Booking date"
           value={form.bookingDate}
           onChange={handleChange}
         />
         <textarea
-          className={`${css.input} ${css.textarea}`}
+          className={clsx(css.input, css.textarea)}
           name="comment"
           placeholder="Comment"
           value={form.comment}
           onChange={handleChange}
         />
-        <button className={css.sendBtn} type="submit">
+        <Button type="submit" className={css.bookBtn}>
           Send
-        </button>
+        </Button>
       </form>
     </div>
   );
